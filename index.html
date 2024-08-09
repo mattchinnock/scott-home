@@ -90,36 +90,34 @@
             <input type="submit" value="Submit">
         </form>
     </main>
-
     <script>
         document.getElementById('lead-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+            e.preventDefault();
 
-        var formData = new FormData(this);
-        var jsonData = {};
+            var formData = new FormData(this);
+            var jsonData = {};
 
-        formData.forEach((value, key) => {
-            jsonData[key] = value;
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            fetch('https://your-worker-url.workers.dev', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Thank you for your submission!');
+                this.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again later.');
+            });
         });
-
-        fetch('https://red-lake-fb0f.mattchinnock.workers.dev/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(jsonData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Thank you for your submission!');
-            this.reset();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error submitting your form. Please try again later.');
-        });
-    });
-
     </script>
 </body>
 </html>
