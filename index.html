@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        form {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Real Estate Agency</h1>
+    </header>
+    <main>
+        <h2>Find Your Dream Home</h2>
+        <p>We're here to help you find the perfect property. Fill out the form below, and one of our agents will contact you shortly.</p>
+        <form id="lead-form">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="cell_phone_1">Phone:</label>
+            <input type="text" id="cell_phone_1" name="cell_phone_1">
+
+            <label for="primary_address">Address:</label>
+            <input type="text" id="primary_address" name="primary_address">
+
+            <label for="primary_city">City:</label>
+            <input type="text" id="primary_city" name="primary_city">
+
+            <label for="primary_state">State:</label>
+            <input type="text" id="primary_state" name="primary_state">
+
+            <label for="primary_zip">ZIP Code:</label>
+            <input type="text" id="primary_zip" name="primary_zip">
+
+            <input type="hidden" id="source" name="source" value="Website">
+
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('lead-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        var jsonData = {};
+
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+
+        fetch('/submitLead', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Thank you for your submission!');
+            this.reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error submitting your form. Please try again later.');
+        });
+    });
+
+    </script>
+</body>
+</html>
