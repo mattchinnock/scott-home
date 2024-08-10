@@ -101,6 +101,8 @@
                 jsonData[key] = value;
             });
 
+            console.log(JSON.stringify(jsonData));
+
             fetch('https://red-lake-fb0f.mattchinnock.workers.dev', {
                 method: 'POST',
                 headers: {
